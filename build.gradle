@@ -72,6 +72,14 @@ publishing {
 
     repositories {
         maven {
+            url = "https://maven.minecraftforge.net/"
+
+            credentials {
+                username = System.getenv("MAVEN_USER")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
+        }
+        maven {
             name = "localMaven"
             url = layout.buildDirectory.dir("repo") // ✅ Change this to your actual repository URL
         }
