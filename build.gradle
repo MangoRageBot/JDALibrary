@@ -67,9 +67,11 @@ shadowJar {
 task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     group "modpublishing"
 
-    apiToken = System.getenv("CURSEFORGE_TOKEN")
+    afterEvaluate {
+        apiToken = System.getenv("CURSEFORGE_TOKEN")
 
-    System.out.println(apiToken)
+        System.out.println(apiToken)
+    }
 
     def projectId = 1225448
     def mainFile = upload(projectId, shadowJar)
