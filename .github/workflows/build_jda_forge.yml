@@ -13,6 +13,7 @@ jobs:
       java: 8
       gradle_tasks: :publish :publishCurseforge
       author_icon_url: "https://avatars.githubusercontent.com/u/147930550"
+    env:
       CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
     secrets:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
