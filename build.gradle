@@ -1,3 +1,5 @@
+import org.mangorage.mangobotgradle.util.GitVersion
+
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -9,6 +11,7 @@ buildscript {
 
     dependencies {
         classpath("com.gradleup.shadow:shadow-gradle-plugin:+")
+        classpath 'org.mangorage:MangoBotGradle:5.0.6'
     }
 }
 
@@ -17,7 +20,9 @@ apply plugin: 'java'
 apply plugin: 'maven-publish'
 
 group = 'org.mangorage'
-version = '1.0-SNAPSHOT'
+version = "$jda_version" + "-" + GitVersion.getGitVersion().getVersionAsString()
+
+println(version)
 
 configurations {
     embedLibrary {
@@ -35,7 +40,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
 
-    embedLibrary("net.dv8tion:JDA:5.3.0") {
+    embedLibrary("net.dv8tion:JDA:$jda_version") {
         exclude group: 'com.fasterxml.jackson.core'
         exclude group: 'org.apache.httpcomponents.httpcore'
     }
@@ -49,24 +54,19 @@ shadowJar {
     enableRelocation = true
     relocationPrefix = "org.mangorage.embed"
 
-    archiveClassifier.set("") // ✅ Sets classifier directly for the shadow JAR
+    archiveClassifier.set("")
     configurations = [project.configurations.embedLibrary]
-
 }
 
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-
             groupId = 'org.mangorage'
             artifactId = 'JDA-Library'
             version = '1.0-SNAPSHOT'
 
-
-
             artifact(shadowJar)
-
         }
     }
 
