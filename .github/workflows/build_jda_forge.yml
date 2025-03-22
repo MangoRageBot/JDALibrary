@@ -13,6 +13,7 @@ jobs:
       java: 8
       gradle_tasks: :publish :publishCurseforge
       author_icon_url: "https://avatars.githubusercontent.com/u/147930550"
+      secrets: inherit
     secrets:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
       PROMOTE_ARTIFACT_WEBHOOK: ${{ secrets.PROMOTE_ARTIFACT_WEBHOOK }}
@@ -20,5 +21,4 @@ jobs:
       PROMOTE_ARTIFACT_PASSWORD: ${{ secrets.PROMOTE_ARTIFACT_PASSWORD }}
       MAVEN_USER: ${{ secrets.USERNAME }}  # Reference the secret
       MAVEN_PASSWORD: ${{ secrets.PASSWORD }}  # Reference the secret
-    env:
       CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }} // CUSTOM
