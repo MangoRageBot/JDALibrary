@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   build:
-    uses: RealMangoRage/SharedActions/.github/workflows/gradle.yml@v0
+    uses: RealMangorage/SharedActions/.github/workflows/gradle.yml@v0
     with:
       java: 8
       gradle_tasks: :publish :publishCurseforge
