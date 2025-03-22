@@ -21,4 +21,3 @@ jobs:
       PROMOTE_ARTIFACT_PASSWORD: ${{ secrets.PROMOTE_ARTIFACT_PASSWORD }}
       MAVEN_USER: ${{ secrets.USERNAME }}
       MAVEN_PASSWORD: ${{ secrets.PASSWORD }}
-      MY_CUSTOM_SECRET: ${{ secrets.MY_CUSTOM_SECRET }}  # Your
