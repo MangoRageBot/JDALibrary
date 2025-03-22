@@ -71,6 +71,7 @@ task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
         apiToken = System.getenv("CURSEFORGE_TOKEN")
 
         System.out.println(apiToken)
+        System.out.println(System.getenv("MAVEN_USER"))
     }
 
     def projectId = 1225448
