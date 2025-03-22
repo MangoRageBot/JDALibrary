@@ -8,17 +8,28 @@ permissions:
 
 jobs:
   build:
-    uses: MinecraftForge/SharedActions/.github/workflows/gradle.yml@v0
-    with:
-      java: 8
-      gradle_tasks: :publish :publishCurseforge
-      author_icon_url: "https://avatars.githubusercontent.com/u/147930550"
-    env:
-      CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-      DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      PROMOTE_ARTIFACT_WEBHOOK: ${{ secrets.PROMOTE_ARTIFACT_WEBHOOK }}
-      PROMOTE_ARTIFACT_USERNAME: ${{ secrets.PROMOTE_ARTIFACT_USERNAME }}
-      PROMOTE_ARTIFACT_PASSWORD: ${{ secrets.PROMOTE_ARTIFACT_PASSWORD }}
-      MAVEN_USER: ${{ secrets.USERNAME }}
-      MAVEN_PASSWORD: ${{ secrets.PASSWORD }}
-      MY_CUSTOM_SECRET: ${{ secrets.MY_CUSTOM_SECRET }}  # Your custom secret
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+
+      - name: Publish JDA Forge
+        uses: MinecraftForge/SharedActions/.github/workflows/gradle.yml@v0
+        with:
+          java: 8
+          gradle_tasks: :publish :publishCurseforge
+          author_icon_url: "https://avatars.githubusercontent.com/u/147930550"
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          PROMOTE_ARTIFACT_WEBHOOK: ${{ secrets.PROMOTE_ARTIFACT_WEBHOOK }}
+          PROMOTE_ARTIFACT_USERNAME: ${{ secrets.PROMOTE_ARTIFACT_USERNAME }}
+          PROMOTE_ARTIFACT_PASSWORD: ${{ secrets.PROMOTE_ARTIFACT_PASSWORD }}
+          MAVEN_USER: ${{ secrets.USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.PASSWORD }}
+          MY_CUSTOM_SECRET: ${{ secrets.MY_CUSTOM_SECRET }}  # Your custom secret
