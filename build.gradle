@@ -70,7 +70,7 @@ task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     afterEvaluate {
         apiToken = System.getenv("CURSEFORGE_TOKEN")
 
-        System.out.println(apiToken)
+        System.out.println(System.getenv("CURSEFORGE_TOKEN"))
         System.out.println(System.getenv("MAVEN_USER"))
     }
 
