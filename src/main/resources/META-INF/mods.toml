@@ -14,7 +14,7 @@ license="MIT"
 [[mods]] #mandatory
 modId="jdaforge" #mandatory
 
-version="1.0.0" #mandatory
+version="${jda_forge_version}" #mandatory
 
 displayName="JDA Forge" #mandatory
 
