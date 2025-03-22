@@ -1,0 +1,79 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        maven {
+            url = "https://maven.minecraftforge.net/"
+        }
+    }
+
+    dependencies {
+        classpath("com.gradleup.shadow:shadow-gradle-plugin:+")
+    }
+}
+
+apply plugin: "com.gradleup.shadow"
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+group = 'org.mangorage'
+version = '1.0-SNAPSHOT'
+
+configurations {
+    embedLibrary {
+        extendsFrom implementation
+    }
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+
+    embedLibrary("net.dv8tion:JDA:5.3.0") {
+        exclude group: 'com.fasterxml.jackson.core'
+        exclude group: 'org.apache.httpcomponents.httpcore'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    enableRelocation = true
+    relocationPrefix = "org.mangorage.embed"
+
+    archiveClassifier.set("") // ✅ Sets classifier directly for the shadow JAR
+    configurations = [project.configurations.embedLibrary]
+
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+
+            groupId = 'org.mangorage'
+            artifactId = 'JDA-Library'
+            version = '1.0-SNAPSHOT'
+
+
+
+            artifact(shadowJar)
+
+        }
+    }
+
+    repositories {
+        maven {
+            name = "localMaven"
+            url = layout.buildDirectory.dir("repo") // ✅ Change this to your actual repository URL
+        }
+    }
+}
