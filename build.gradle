@@ -69,6 +69,8 @@ task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
 
     apiToken = System.getenv("CURSEFORGE_TOKEN")
 
+    System.out.println(apiToken)
+
     def projectId = 1225448
     def mainFile = upload(projectId, shadowJar)
     mainFile.releaseType = "release"
