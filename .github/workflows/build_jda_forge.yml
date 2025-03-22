@@ -2,6 +2,8 @@ name: Build JDA Forge
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - gradle.properties
 
 permissions:
   contents: write
