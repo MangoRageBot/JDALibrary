@@ -13,7 +13,7 @@ buildscript {
 
     dependencies {
         classpath("com.gradleup.shadow:shadow-gradle-plugin:+")
-        classpath 'org.mangorage:MangoBotGradle:5.0.6'
+        classpath 'org.mangorage:MangoBotGradle:5.0.13'
     }
 }
 
@@ -25,10 +25,13 @@ apply plugin: "com.gradleup.shadow"
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 
+def commitInfo = GitVersion.getGitVersion()
+
 group = 'org.mangorage'
-version = "$jda_version" + "-" + GitVersion.getGitVersion().getVersionAsString()
+version = "$jda_version" + "-" + commitInfo.getVersionAsString()
 
 println(version)
+println(commitInfo.getLastCommitMessage())
 
 configurations {
     embedLibrary {
@@ -61,6 +64,14 @@ shadowJar {
 
     archiveClassifier.set("")
     configurations = [project.configurations.embedLibrary]
+
+    manifest {
+        attributes(
+                [
+                        'FmlModType': 'LIBRARY'
+                ]
+        )
+    }
 }
 
 tasks.named('processResources', ProcessResources).configure {
