@@ -64,15 +64,24 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
-
-    embedLibrary("net.dv8tion:JDA:$jda_version") {
-        exclude group: 'com.fasterxml.jackson.core'
-        exclude group: 'org.apache.httpcomponents.httpcore'
-    }
+    embedLibrary("net.dv8tion:JDA:$jda_version")
 }
 
 test {
     useJUnitPlatform()
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    eachFile { details ->
+        println "Processing file: ${details.path}"
+    }
+
+    filesMatching("fabric.mod.json") {
+        println "Expanding properties in: ${path}"
+        expand([
+                jda_library_version: version
+        ]  + [project: project])
+    }
 }
 
 shadowJar {
@@ -89,31 +98,10 @@ shadowJar {
                 ]
         )
     }
+
+    relocate("net.dv8tion.jda", 'net.dv8tion.jda')
 }
 
-tasks.named('processResources', ProcessResources).configure {
-    eachFile { details ->
-        println "Processing file: ${details.path}"
-    }
-
-    filesMatching("META-INF/mods.toml") {
-        println "Expanding properties in: ${path}"
-        expand([
-                jda_forge_version: version
-        ]  + [project: project])
-    }
-}
-
-
-task testExpand {
-    doLast {
-        def props = [
-                jda_forge_version: version
-        ]
-        def file = file("src/main/resources/META-INF/mods.toml")
-        file.text = file.text.replace("\${jda_forge_version}", props.jda_forge_version)
-    }
-}
 
 task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     group "modpublishing"
@@ -127,29 +115,31 @@ task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     mainFile.releaseType = "release"
     mainFile.displayName = "JDA Forge " + project.version
     mainFile.changelog = commitInfo.lastCommitMessage()
+
     mainFile.addModLoader("forge")
+    mainFile.addModLoader("neoforge")
+    mainFile.addModLoader("fabric")
 
-
-//    '1.7.10', '1.7.9', '1.7.8', '1.7.7', '1.7.6', '1.7.5', '1.7.4', '1.7.3', '1.7.2',
-//    '1.8', '1.8.1', '1.8.2', '1.8.3', '1.8.4', '1.8.5', '1.8.6', '1.8.7', '1.8.8',
-//    '1.9', '1.9.1', '1.9.2', '1.9.3', '1.9.4',
-//    '1.10', '1.10.1', '1.10.2',
-//    '1.11', '1.11.1', '1.11.2',
-//    '1.12', '1.12.1', '1.12.2',
-//    '1.13', '1.13.1', '1.13.2',
-//    '1.14', '1.14.1', '1.14.2', '1.14.3', '1.14.4',
-//    '1.15', '1.15.1', '1.15.2',
-//    '1.16', '1.16.1', '1.16.2', '1.16.3', '1.16.4', '1.16.5',
-//    '1.17', '1.17.1',
-//    '1.18', '1.18.1', '1.18.2',
-//    '1.19', '1.19.1', '1.19.2', '1.19.3', '1.19.4',
-//    '1.20', '1.20.1', '1.20.2', '1.20.3', '1.20.4', '1.20.5', '1.20.6',
-//    '1.21', '1.21.1', '1.21.2', '1.21.3', '1.21.4'
-
-    // 1.18.2+ has lowcodefnl
-    // TODO: Make it so we can use this mod on 1.7.10+ eventually
     List<String> gameVersions = [
-            '1.18.2',
+            '1.0.0', '1.0',
+            '1.1',
+            '1.2.1', '1.2.2', '1.2.3', '1.2.4', '1.2.5',
+            '1.3.1', '1.3.2',
+            '1.4.2', '1.4.4', '1.4.5', '1.4.6', '1.4.7',
+            '1.5', '1.5.1', '1.5.2', '1.5.3',
+            '1.6.1', '1.6.2', '1.6.4',
+            '1.7.10', '1.7.9', '1.7.8', '1.7.7', '1.7.6', '1.7.5', '1.7.4', '1.7.3', '1.7.2',
+            '1.8', '1.8.1', '1.8.2', '1.8.3', '1.8.4', '1.8.5', '1.8.6', '1.8.7', '1.8.8', '1.8.9',
+            '1.9', '1.9.1', '1.9.2', '1.9.3', '1.9.4',
+            '1.10', '1.10.1', '1.10.2',
+            '1.11', '1.11.1', '1.11.2',
+            '1.12', '1.12.1', '1.12.2',
+            '1.13', '1.13.1', '1.13.2',
+            '1.14', '1.14.1', '1.14.2', '1.14.3', '1.14.4',
+            '1.15', '1.15.1', '1.15.2',
+            '1.16', '1.16.1', '1.16.2', '1.16.3', '1.16.4', '1.16.5',
+            '1.17', '1.17.1',
+            '1.18', '1.18.1', '1.18.2',
             '1.19', '1.19.1', '1.19.2', '1.19.3', '1.19.4',
             '1.20', '1.20.1', '1.20.2', '1.20.3', '1.20.4', '1.20.5', '1.20.6',
             '1.21', '1.21.1', '1.21.2', '1.21.3', '1.21.4'
@@ -161,11 +151,111 @@ task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     }
 }
 
+tasks.register('shadowJavadocJar', Jar) {
+    archiveClassifier.set('javadoc')
+
+    from javadoc.destinationDir
+    dependsOn javadoc
+
+    doFirst {
+        delete javadoc.destinationDir
+        javadoc.destinationDir.mkdirs()
+    }
+}
+
+import org.apache.tools.ant.taskdefs.Expand
+import org.apache.tools.ant.taskdefs.Replace
+
+task fetchSources {
+    doLast {
+        configurations.embedLibrary.resolvedConfiguration.lenientConfiguration.artifacts.each { artifact ->
+            def depModuleIdentifier = artifact.moduleVersion.id.module
+            def group = depModuleIdentifier.group
+            def name = depModuleIdentifier.name
+            def version = artifact.moduleVersion.id.version
+
+            // Construct the source artifact dependency
+            def sourceDependency = dependencies.create("${group}:${name}:${version}:sources")
+
+            // Resolve the source artifact
+            def sourceArtifacts = configurations.detachedConfiguration(sourceDependency).resolvedConfiguration.lenientConfiguration.artifacts
+
+            sourceArtifacts.each { sourceArtifact ->
+                // Copy the source artifact to a location for inclusion in the JAR
+                def tempDir = file("$buildDir/tmp/sources_original")
+                copy {
+                    from zipTree(sourceArtifact.file)
+                    into tempDir
+                }
+
+                // Relocate the source code
+                fileTree(dir: tempDir).each { file ->
+                    if (file.name.endsWith(".java")) {
+                        logger.info("Processing file: ${file.absolutePath}")
+
+                        def originalPackage = findOriginalPackage(file)
+                        logger.info("Original package: ${originalPackage}")
+
+                        if (originalPackage) {
+                            def newPackage = "org.mangorage.embed." + originalPackage
+                            // Replace package declaration
+
+                            // Crude, but you know better
+                            def content = file.text
+                            def originalContent = content // Store original content for comparison
+                            content = content.replace("package " + originalPackage + ";", "package " + newPackage + ";")
+
+                            // Logging the file after changes
+                            logger.info("File after relocation ${content}")
+
+                            if (content != originalContent) {
+                                file.write(content)
+                            } else {
+                                logger.warn("No change after relocation")
+                            }
+
+                        } else {
+                            logger.warn("No package found in file")
+                        }
+
+                    }
+                }
+
+                copy {
+                    from tempDir
+                    into "$buildDir/tmp/sources"
+                }
+
+                tempDir.deleteDir()
+            }
+        }
+    }
+}
+
+def findOriginalPackage(File file) {
+    def content = file.text
+    def match = content =~ /package (.*?);/
+    if (match.find()) {
+        return match.group(1)
+    }
+    return null
+}
+
+task shadowSourcesJar(type: Jar) {
+    dependsOn fetchSources
+    archiveClassifier = 'sources'
+    from "$buildDir/tmp/sources"
+    doLast {
+        file("$buildDir/tmp/sources").deleteDir()
+    }
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
             artifactId = "JDA-Forge"
-            artifact(shadowJar)
+
+            artifact(shadowJar) // The main JAR
         }
     }
 
@@ -180,7 +270,7 @@ publishing {
         }
         maven {
             name = "localMaven"
-            url = layout.buildDirectory.dir("repo") // ✅ Change this to your actual repository URL
+            url = layout.buildDirectory.dir("repo")
         }
     }
 }

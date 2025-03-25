@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "jdalibrary",
+  "version": "${jda_library_version}",
+  "name": "JDA Library",
+  "description": "JDA Library",
+  "authors": [
+    "MangoRage"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {},
+  "depends": {}
+}
