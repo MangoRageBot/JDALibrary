@@ -33,6 +33,23 @@ version = "$jda_version" + "-" + commitInfo.getVersionAsString()
 println(version)
 println(commitInfo.getLastCommitMessage())
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+
+tasks.withType(JavaExec).configureEach {
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    })
+}
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
 configurations {
     embedLibrary {
         extendsFrom implementation
@@ -109,7 +126,7 @@ task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     def mainFile = upload(projectId, shadowJar)
     mainFile.releaseType = "release"
     mainFile.displayName = "JDA Forge " + project.version
-    mainFile.changelog = 'Automated Release'
+    mainFile.changelog = commitInfo.lastCommitMessage()
     mainFile.addModLoader("forge")
 
 
