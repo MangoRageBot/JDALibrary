@@ -3,7 +3,7 @@ on:
   push:
     branches: [ "master" ]
     paths:
-      - gradle.properties
+      - settings.gradle
 
 permissions:
   contents: write
