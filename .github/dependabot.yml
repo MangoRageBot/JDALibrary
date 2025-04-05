@@ -4,9 +4,3 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    # The file-patterns option is correctly used here.
-    # It adheres to the Dependabot specification for Gradle.
-    file-patterns:
-      - "**/build.gradle"
-      - "**/build.gradle.kts"
-      - "**/gradle.properties"
