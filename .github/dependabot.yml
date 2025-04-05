@@ -1,11 +1,17 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
-
 version: 2
 updates:
-  - package-ecosystem: "gradle" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "gradle"
+    directory: "/"
     schedule:
       interval: "daily"
+    # Specify additional file patterns to check.
+    # By default, Dependabot looks for build.gradle(.kts) files.
+    # To include gradle.properties, add it to the file patterns.
+    # file-patterns:
+    #   - "**/build.gradle"
+    #   - "**/build.gradle.kts"
+    #   - "**/gradle.properties"
+    # or to make it simpler, use a wildcard to get all gradle files
+    file-patterns:
+      - "**/*.gradle*"
+      - "**/gradle.properties"
