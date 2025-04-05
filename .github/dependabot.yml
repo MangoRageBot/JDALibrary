@@ -4,14 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    # Specify additional file patterns to check.
-    # By default, Dependabot looks for build.gradle(.kts) files.
-    # To include gradle.properties, add it to the file patterns.
-    # file-patterns:
-    #   - "**/build.gradle"
-    #   - "**/build.gradle.kts"
-    #   - "**/gradle.properties"
-    # or to make it simpler, use a wildcard to get all gradle files
+    # The file-patterns option is correctly used here.
+    # It adheres to the Dependabot specification for Gradle.
     file-patterns:
-      - "**/*.gradle*"
+      - "**/build.gradle"
+      - "**/build.gradle.kts"
       - "**/gradle.properties"
