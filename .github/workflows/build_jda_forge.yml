@@ -10,6 +10,11 @@ permissions:
 
 jobs:
   build:
+    if: |
+      github.actor != 'dependabot[bot]' &&
+      github.actor != 'github-actions[bot]' &&
+      !startsWith(github.actor, 'dependabot') &&
+      !endsWith(github.event.head_commit.author.name, '[bot]')
     uses: RealMangorage/SharedActions/.github/workflows/gradle.yml@v0
     with:
       java: 21
