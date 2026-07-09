@@ -18,7 +18,7 @@ jobs:
       !contains(github.event.head_commit.message, '@skip')
     uses: RealMangorage/SharedActions/.github/workflows/gradle.yml@main
     with:
-      java: 21
+      java: 17
       gradle_tasks: :publish :publishCurseforge
       artifact_name: "JDA-Forge"
       artifact_group: "org.mangorage"
