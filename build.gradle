@@ -31,6 +31,7 @@ def commitInfo = GitVersion.getGitVersion()
 group = 'org.mangorage'
 version = "$jda_version" + "-" + commitInfo.getVersionAsString()
 
+
 println(version)
 println(commitInfo.getLastCommitMessage())
 
