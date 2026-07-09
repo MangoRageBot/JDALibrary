@@ -16,7 +16,7 @@ jobs:
       !startsWith(github.actor, 'dependabot') &&
       !endsWith(github.event.head_commit.author.name, '[bot]') &&
       !contains(github.event.head_commit.message, '@skip')
-    uses: RealMangoRage/SharedActions/.github/workflows/gradle.yml@v0
+    uses: RealMangoRage/SharedActions/.github/workflows/gradle.yml@main
     with:
       java: 21
       gradle_tasks: :publish :publishCurseforge
