@@ -1,3 +1,4 @@
+```
 import org.mangorage.mangobotgradle.util.GitVersion
 
 buildscript {
@@ -90,8 +91,7 @@ shadowJar {
     enableRelocation = true
     relocationPrefix = "org.mangorage.embed"
 
-    // Remove: archiveClassifier.set("")
-    
+    archiveClassifier.set("")
     configurations = [project.configurations.embedLibrary]
 
     manifest {
@@ -261,13 +261,7 @@ publishing {
         mavenJava(MavenPublication) {
             artifactId = "JDA-Library"
 
-            artifact(shadowJar) {
-                classifier = ""
-            }
-            
-            artifact(shadowSourcesJar) {
-                classifier = "sources"
-            }
+            artifact(shadowJar) // The main JAR
         }
     }
 
@@ -286,3 +280,4 @@ publishing {
         }
     }
 }
+```
