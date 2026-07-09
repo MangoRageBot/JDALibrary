@@ -34,6 +34,7 @@ version = "$jda_version" + "-" + commitInfo.getVersionAsString()
 println(version)
 println(commitInfo.getLastCommitMessage())
 
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
