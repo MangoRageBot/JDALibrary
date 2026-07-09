@@ -28,6 +28,7 @@ apply plugin: 'maven-publish'
 def jda_version = '6.5.0'
 def commitInfo = GitVersion.getGitVersion()
 
+
 group = 'org.mangorage'
 version = "$jda_version" + "-" + commitInfo.getVersionAsString()
 
