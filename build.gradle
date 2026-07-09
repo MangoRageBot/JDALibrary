@@ -274,8 +274,8 @@ publishing {
             url = "https://maven.mangorage.org/releases/"
 
             credentials {
-                username = System.getenv("USERNAME")
-                password = System.getenv("PASSWORD")
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
             }
         }
         maven {
