@@ -166,7 +166,6 @@ tasks.register('shadowJavadocJar', Jar) {
     }
 }
 
-
 import org.apache.tools.ant.taskdefs.Expand
 import org.apache.tools.ant.taskdefs.Replace
 
