@@ -31,6 +31,7 @@ def commitInfo = GitVersion.getGitVersion()
 group = 'org.mangorage'
 version = "$jda_version" + "-" + commitInfo.getVersionAsString()
 
+
 println(version)
 println(commitInfo.getLastCommitMessage())
 
@@ -244,12 +245,14 @@ def findOriginalPackage(File file) {
     return null
 }
 
-task shadowSourcesJar(type: Jar) {
+tasks.register('shadowSourcesJar', Jar) {
     dependsOn fetchSources
     archiveClassifier = 'sources'
-    from "$buildDir/tmp/sources"
+
+    from layout.buildDirectory.dir("tmp/sources")
+
     doLast {
-        file("$buildDir/tmp/sources").deleteDir()
+        layout.buildDirectory.dir("tmp/sources").get().asFile.deleteDir()
     }
 }
 
