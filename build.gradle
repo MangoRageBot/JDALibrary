@@ -90,7 +90,8 @@ shadowJar {
     enableRelocation = true
     relocationPrefix = "org.mangorage.embed"
 
-    archiveClassifier.set("")
+    // Remove: archiveClassifier.set("")
+    
     configurations = [project.configurations.embedLibrary]
 
     manifest {
@@ -260,7 +261,13 @@ publishing {
         mavenJava(MavenPublication) {
             artifactId = "JDA-Library"
 
-            artifact(shadowJar) // The main JAR
+            artifact(shadowJar) {
+                classifier = ""
+            }
+            
+            artifact(shadowSourcesJar) {
+                classifier = "sources"
+            }
         }
     }
 
