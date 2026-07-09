@@ -109,11 +109,7 @@ task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     group "modpublishing"
 
     afterEvaluate {
-        if (System.getenv("CURSEFORGE_TOKEN") == null) {
-            apiToken = {curseforge_token}
-        } else {
-            apiToken = System.getenv("CURSEFORGE_TOKEN")
-        }
+        apiToken = System.getenv("CURSEFORGE_TOKEN")
     }
 
     def projectId = 1225448
