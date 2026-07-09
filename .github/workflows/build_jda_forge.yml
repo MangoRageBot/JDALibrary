@@ -16,17 +16,18 @@ jobs:
       !startsWith(github.actor, 'dependabot') &&
       !endsWith(github.event.head_commit.author.name, '[bot]') &&
       !contains(github.event.head_commit.message, '@skip')
-    uses: RealMangorage/SharedActions/.github/workflows/gradle.yml@main
+    uses: RealMangorage/SharedActions/.github/workflows/gradle.yml@v0
     with:
-      java: 17
+      java: 21
       gradle_tasks: :publish :publishCurseforge
       artifact_name: "JDA-Forge"
       artifact_group: "org.mangorage"
+      author_icon_url: "https://avatars.githubusercontent.com/u/147930550"
     secrets:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
       PROMOTE_ARTIFACT_WEBHOOK: ${{ secrets.PROMOTE_ARTIFACT_WEBHOOK }}
       PROMOTE_ARTIFACT_USERNAME: ${{ secrets.PROMOTE_ARTIFACT_USERNAME }}
       PROMOTE_ARTIFACT_PASSWORD: ${{ secrets.PROMOTE_ARTIFACT_PASSWORD }}
-      MAVEN_USER: ${{ secrets.USERNAME }}
-      MAVEN_PASSWORD: ${{ secrets.PASSWORD }}
+      MAVEN_USER: ${{ secrets.USERNAME }}  # Reference the secret
+      MAVEN_PASSWORD: ${{ secrets.PASSWORD }}  # Reference the
+      CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
