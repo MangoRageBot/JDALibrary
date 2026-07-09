@@ -104,6 +104,7 @@ shadowJar {
     relocate("net.dv8tion.jda", 'net.dv8tion.jda')
 }
 
+
 task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     group "modpublishing"
 
