@@ -1,3 +1,4 @@
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
 import org.mangorage.mangobotgradle.util.GitVersion
 
 buildscript {
@@ -105,7 +106,7 @@ shadowJar {
     relocate("net.dv8tion.jda", 'net.dv8tion.jda')
 }
 
-task publishCurseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+tasks.register('publishCurseforge', TaskPublishCurseForge) {
     group "modpublishing"
 
     afterEvaluate {
@@ -170,7 +171,7 @@ tasks.register('shadowJavadocJar', Jar) {
 import org.apache.tools.ant.taskdefs.Expand
 import org.apache.tools.ant.taskdefs.Replace
 
-task fetchSources {
+tasks.register('fetchSources') {
     doLast {
         configurations.embedLibrary.resolvedConfiguration.lenientConfiguration.artifacts.each { artifact ->
             def depModuleIdentifier = artifact.moduleVersion.id.module
